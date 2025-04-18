@@ -1,0 +1,18 @@
+# Target all C# files in the project
+[*.cs]
+
+# Code style settings
+csharp_style_namespace_declarations = file_scoped
+dotnet_style_prefer_global_using_directive = true:suggestion
+
+# CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1812: Avoid uninstantiated internal classes
+dotnet_diagnostic.CA1812.severity = none
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+
+# IDE0058: Remove unnecessary expression value
+dotnet_diagnostic.IDE0058.severity = none
