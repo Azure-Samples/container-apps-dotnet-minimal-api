@@ -9,7 +9,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: 'ubuntu-latest'
     permissions:
       security-events: write
       packages: read
@@ -22,7 +22,7 @@ jobs:
         - language: actions
           build-mode: none
         - language: csharp
-          build-mode: autobuild
+          build-mode: manual
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -31,6 +31,12 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
+    - name: Manually build code
+      if: matrix.build-mode == 'manual' && matrix-language == 'csharp'
+      working-directory: ./src
+      run: |
+        dotnet build --configuration release
+        dotnet format --verify-no-changes --severity info
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
